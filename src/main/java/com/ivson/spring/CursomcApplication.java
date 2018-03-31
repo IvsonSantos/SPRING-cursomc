@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ivson.spring.domain.Categoria;
 import com.ivson.spring.domain.Cidade;
+import com.ivson.spring.domain.Cliente;
+import com.ivson.spring.domain.Endereco;
 import com.ivson.spring.domain.Estado;
 import com.ivson.spring.domain.Produto;
+import com.ivson.spring.domain.enuns.TipoCliente;
 import com.ivson.spring.repositories.CategoriaRepository;
 import com.ivson.spring.repositories.CidadeRepository;
+import com.ivson.spring.repositories.ClienteRepository;
+import com.ivson.spring.repositories.EnderecoRepository;
 import com.ivson.spring.repositories.EstadoRepository;
 import com.ivson.spring.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CidadeRepository cidadeRepository; 
+	
+	@Autowired
+	private ClienteRepository clienteRepository; 
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository; 
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -51,6 +62,10 @@ public class CursomcApplication implements CommandLineRunner {
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
+
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+
 		
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -62,10 +77,19 @@ public class CursomcApplication implements CommandLineRunner {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2,c3));
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "999", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("222222","3333333"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "33333", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "44444", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 }
