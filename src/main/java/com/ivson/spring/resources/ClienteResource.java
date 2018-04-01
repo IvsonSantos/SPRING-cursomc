@@ -7,30 +7,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ivson.spring.domain.Categoria;
-import com.ivson.spring.services.CategoriaService;
+import com.ivson.spring.domain.Cliente;
+import com.ivson.spring.services.ClienteService;
 
-/**
- * Controlador REST para servir como ENDPOINT, deve buscar do SERVICE
- * @author Santo
- *
- */
 @RestController
-@RequestMapping(value = "/categorias")  // nome do endopoint REST
-public class CategoriaResource {
+@RequestMapping(value = "/clientes")  // nome do endopoint REST
+public class ClienteResource {
 
 	@Autowired
-	private CategoriaService service;
+	private ClienteService service;
 	
 	/**
-	 * ENDPOINT deste método é /categorias/{id}
+	 * ENDPOINT deste método é /clientes/{id}
 	 * ResponseEntity = tipo especial para um servico REST, posui codigos HTTP de resposta
 	 * @return
 	 */
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		
-		Categoria categoria = service.find(id);		
-		return ResponseEntity.ok().body(categoria);
+		Cliente cliente = service.find(id);		
+		return ResponseEntity.ok().body(cliente);
 	}
 }
